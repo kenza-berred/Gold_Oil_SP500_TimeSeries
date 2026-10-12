@@ -1,0 +1,66 @@
+Series: y_train 
+ARIMA(2,0,2)(0,0,1)[5] with non-zero mean 
+
+Coefficients:
+         ar1      ar2      ma1     ma2     sma1   mean
+      0.0480  -0.9679  -0.0446  0.9332  -0.0625  2e-04
+s.e.  0.0199   0.0362   0.0277  0.0518   0.0319  7e-04
+
+sigma^2 = 0.0005885:  log likelihood = 2597.33
+AIC=-5180.66   AICc=-5180.56   BIC=-5145.46
+Series: y_train 
+ARIMA(0,0,1) with non-zero mean 
+
+Coefficients:
+          ma1   mean
+      -0.0455  9e-04
+s.e.   0.0310  3e-04
+
+sigma^2 = 0.0001383:  log likelihood = 3412.13
+AIC=-6818.27   AICc=-6818.25   BIC=-6803.18
+Series: y_train 
+ARIMA(0,0,0) with non-zero mean 
+
+Coefficients:
+       mean
+      4e-04
+s.e.  3e-04
+
+sigma^2 = 0.0001204:  log likelihood = 3489.85
+AIC=-6975.7   AICc=-6975.69   BIC=-6965.64
+$Oil
+Series: y_train 
+ARIMA(2,0,2)(0,0,1)[5] with non-zero mean 
+
+Coefficients:
+         ar1      ar2      ma1     ma2     sma1   mean
+      0.0480  -0.9679  -0.0446  0.9332  -0.0625  2e-04
+s.e.  0.0199   0.0362   0.0277  0.0518   0.0319  7e-04
+
+sigma^2 = 0.0005885:  log likelihood = 2597.33
+AIC=-5180.66   AICc=-5180.56   BIC=-5145.46
+
+$Gold
+Series: y_train 
+ARIMA(0,0,1) with non-zero mean 
+
+Coefficients:
+          ma1   mean
+      -0.0455  9e-04
+s.e.   0.0310  3e-04
+
+sigma^2 = 0.0001383:  log likelihood = 3412.13
+AIC=-6818.27   AICc=-6818.25   BIC=-6803.18
+
+$SP500
+Series: y_train 
+ARIMA(0,0,0) with non-zero mean 
+
+Coefficients:
+       mean
+      4e-04
+s.e.  3e-04
+
+sigma^2 = 0.0001204:  log likelihood = 3489.85
+AIC=-6975.7   AICc=-6975.69   BIC=-6965.64
+

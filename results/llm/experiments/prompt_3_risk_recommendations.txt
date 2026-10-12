@@ -1,0 +1,242 @@
+Tu es un analyste en gestion des risques quantitatifs au sein d'un comité d'investissement.
+Voici les données chiffrées réelles obtenues par le projet de séries temporelles :
+
+{
+  "garch_volatility_metrics": [
+    {
+      "Asset": "Gold",
+      "Test_Observations": 126,
+      "GARCH_MSE": 1.058382134800324e-07,
+      "Baseline_MSE": 9.997819408793324e-08,
+      "GARCH_MAE": 0.0002441355604096,
+      "Baseline_MAE": 0.0001971987512235,
+      "GARCH_QLIKE": -7.394174514701954,
+      "Baseline_QLIKE": -7.367766898724782,
+      "GARCH_Better_QLIKE": true
+    },
+    {
+      "Asset": "Oil",
+      "Test_Observations": 126,
+      "GARCH_MSE": 1.2243810257505907e-05,
+      "Baseline_MSE": 1.3246082732279255e-05,
+      "GARCH_MAE": 0.0016468191664133,
+      "Baseline_MAE": 0.0013738568690804,
+      "GARCH_QLIKE": -5.516034389146923,
+      "Baseline_QLIKE": -4.837170363685254,
+      "GARCH_Better_QLIKE": true
+    },
+    {
+      "Asset": "SP500",
+      "Test_Observations": 126,
+      "GARCH_MSE": 1.1740002908220396e-08,
+      "Baseline_MSE": 1.4372353984186317e-08,
+      "GARCH_MAE": 7.279944270057678e-05,
+      "Baseline_MAE": 9.910153326257112e-05,
+      "GARCH_QLIKE": -8.649197090081326,
+      "Baseline_QLIKE": -8.511322791008759,
+      "GARCH_Better_QLIKE": true
+    }
+  ],
+  "deep_learning_multistep_metrics": [
+    {
+      "Model": "LSTM",
+      "Asset": "Oil",
+      "MSE": 0.0015735466520749,
+      "RMSE": 0.0396679549772229,
+      "MAE": 0.0291405508807769,
+      "N_Forecasts": 125,
+      "Baseline_MSE": 0.0015520243679057,
+      "Baseline_RMSE": 0.0393957404792167,
+      "Baseline_MAE": 0.028952240028917
+    },
+    {
+      "Model": "LSTM",
+      "Asset": "Gold",
+      "MSE": 0.000213104491892,
+      "RMSE": 0.0145980989136261,
+      "MAE": 0.0112203155463676,
+      "N_Forecasts": 125,
+      "Baseline_MSE": 0.0002116326240515,
+      "Baseline_RMSE": 0.0145475985664827,
+      "Baseline_MAE": 0.0111906770103981
+    },
+    {
+      "Model": "LSTM",
+      "Asset": "SP500",
+      "MSE": 6.140188754672363e-05,
+      "RMSE": 0.0078359356522832,
+      "MAE": 0.0060633237831071,
+      "N_Forecasts": 125,
+      "Baseline_MSE": 6.22721260822981e-05,
+      "Baseline_RMSE": 0.0078912689779463,
+      "Baseline_MAE": 0.0060536996695809
+    },
+    {
+      "Model": "GRU",
+      "Asset": "Oil",
+      "MSE": 0.0015634595871067,
+      "RMSE": 0.0395406068125761,
+      "MAE": 0.0291796110137639,
+      "N_Forecasts": 125,
+      "Baseline_MSE": 0.0015520243679057,
+      "Baseline_RMSE": 0.0393957404792167,
+      "Baseline_MAE": 0.028952240028917
+    },
+    {
+      "Model": "GRU",
+      "Asset": "Gold",
+      "MSE": 0.0002132173742621,
+      "RMSE": 0.0146019647397928,
+      "MAE": 0.011217148505328,
+      "N_Forecasts": 125,
+      "Baseline_MSE": 0.0002116326240515,
+      "Baseline_RMSE": 0.0145475985664827,
+      "Baseline_MAE": 0.0111906770103981
+    },
+    {
+      "Model": "GRU",
+      "Asset": "SP500",
+      "MSE": 6.263168150445173e-05,
+      "RMSE": 0.0079140180379154,
+      "MAE": 0.0060564351238029,
+      "N_Forecasts": 125,
+      "Baseline_MSE": 6.22721260822981e-05,
+      "Baseline_RMSE": 0.0078912689779463,
+      "Baseline_MAE": 0.0060536996695809
+    }
+  ],
+  "diebold_mariano_significance_tests": [
+    {
+      "Asset": "Gold",
+      "Model_A": "ARIMA",
+      "Model_B": "SARIMA",
+      "N": 25,
+      "Mean_Squared_Loss_Difference_A_minus_B": -1.471627583417361e-09,
+      "DM_Statistic": -0.0792992249610356,
+      "P_Value": 0.937452130501081,
+      "Interpretation": "A has lower squared loss",
+      "Holm_Adjusted_P_Value": 1.0,
+      "Significant_After_Holm_05": false
+    },
+    {
+      "Asset": "Gold",
+      "Model_A": "ARIMA",
+      "Model_B": "LSTM",
+      "N": 25,
+      "Mean_Squared_Loss_Difference_A_minus_B": -4.060848204863432e-06,
+      "DM_Statistic": -0.5065079793890944,
+      "P_Value": 0.6171218419099722,
+      "Interpretation": "A has lower squared loss",
+      "Holm_Adjusted_P_Value": 1.0,
+      "Significant_After_Holm_05": false
+    },
+    {
+      "Asset": "Gold",
+      "Model_A": "ARIMA",
+      "Model_B": "GRU",
+      "N": 25,
+      "Mean_Squared_Loss_Difference_A_minus_B": 7.998217459827335e-07,
+      "DM_Statistic": 0.2097586225596653,
+      "P_Value": 0.8356265047247012,
+      "Interpretation": "A has higher squared loss",
+      "Holm_Adjusted_P_Value": 1.0,
+      "Significant_After_Holm_05": false
+    },
+    {
+      "Asset": "Gold",
+      "Model_A": "ARIMA",
+      "Model_B": "Baseline",
+      "N": 25,
+      "Mean_Squared_Loss_Difference_A_minus_B": -2.625380726707708e-06,
+      "DM_Statistic": -0.4735323959575809,
+      "P_Value": 0.6401124834758982,
+      "Interpretation": "A has lower squared loss",
+      "Holm_Adjusted_P_Value": 1.0,
+      "Significant_After_Holm_05": false
+    },
+    {
+      "Asset": "Gold",
+      "Model_A": "SARIMA",
+      "Model_B": "LSTM",
+      "N": 25,
+      "Mean_Squared_Loss_Difference_A_minus_B": -4.059376577280015e-06,
+      "DM_Statistic": -0.5058609464935709,
+      "P_Value": 0.6175692405918298,
+      "Interpretation": "A has lower squared loss",
+      "Holm_Adjusted_P_Value": 1.0,
+      "Significant_After_Holm_05": false
+    },
+    {
+      "Asset": "Gold",
+      "Model_A": "SARIMA",
+      "Model_B": "GRU",
+      "N": 25,
+      "Mean_Squared_Loss_Difference_A_minus_B": 8.012933735661502e-07,
+      "DM_Statistic": 0.2100934849355867,
+      "P_Value": 0.8353680855219645,
+      "Interpretation": "A has higher squared loss",
+      "Holm_Adjusted_P_Value": 1.0,
+      "Significant_After_Holm_05": false
+    },
+    {
+      "Asset": "Gold",
+      "Model_A": "SARIMA",
+      "Model_B": "Baseline",
+      "N": 25,
+      "Mean_Squared_Loss_Difference_A_minus_B": -2.623909099124292e-06,
+      "DM_Statistic": -0.4748015615230372,
+      "P_Value": 0.6392205837059318,
+      "Interpretation": "A has lower squared loss",
+      "Holm_Adjusted_P_Value": 1.0,
+      "Significant_After_Holm_05": false
+    },
+    {
+      "Asset": "Gold",
+      "Model_A": "LSTM",
+      "Model_B": "GRU",
+      "N": 25,
+      "Mean_Squared_Loss_Difference_A_minus_B": 4.860669950846166e-06,
+      "DM_Statistic": 0.5233921063075799,
+      "P_Value": 0.6055009268287952,
+      "Interpretation": "A has higher squared loss",
+      "Holm_Adjusted_P_Value": 1.0,
+      "Significant_After_Holm_05": false
+    },
+    {
+      "Asset": "Gold",
+      "Model_A": "LSTM",
+      "Model_B": "Baseline",
+      "N": 25,
+      "Mean_Squared_Loss_Difference_A_minus_B": 1.435467478155724e-06,
+      "DM_Statistic": 0.1350355043990885,
+      "P_Value": 0.8937099448974404,
+      "Interpretation": "A has higher squared loss",
+      "Holm_Adjusted_P_Value": 1.0,
+      "Significant_After_Holm_05": false
+    },
+    {
+      "Asset": "Gold",
+      "Model_A": "GRU",
+      "Model_B": "Baseline",
+      "N": 25,
+      "Mean_Squared_Loss_Difference_A_minus_B": -3.425202472690441e-06,
+      "DM_Statistic": -0.4766039124111255,
+      "P_Value": 0.6379549436850717,
+      "Interpretation": "A has lower squared loss",
+      "Holm_Adjusted_P_Value": 1.0,
+      "Significant_After_Holm_05": false
+    }
+  ]
+}
+
+CONTRAINTES CRITIQUES DE RESPONSABILITÉ :
+- Tu NE DOIS PAS formuler de conseil en investissement personnalisé.
+- Tu NE DOIS PAS affirmer que les modèles permettent de réaliser des gains financiers prévisibles ou réguliers.
+- Tu DOIS distinguer explicitement la prévision directionnelle (non fiable) de la mesure du risque de volatilité (GARCH).
+- Tu DOIS mentionner que les performances passées ne préjugent pas des performances futures.
+- Tu DOIS souligner les limites des modèles (tests Diebold-Mariano non significatifs, non-normalité, instabilité).
+
+CONSIGNE :
+1. Rédige une note synthétique pour le comité des risques expliquant comment utiliser ces résultats concrètement (allocation de capital, dimensionnement des limites de risque, Value-at-Risk).
+2. Explique pourquoi les réseaux de neurones (LSTM, GRU) n'apportent aucun avantage pour prédire les rendements quotidiens face au benchmark zéro.
+3. Formule explicitement au moins 4 limites majeures et scénarios d'échec de ces modélisations.

@@ -1,0 +1,77 @@
+
+VAR Estimation Results:
+========================= 
+Endogenous variables: Oil, Gold, SP500 
+Deterministic variables: const 
+Sample size: 1127 
+Log Likelihood: 9505.891 
+Roots of the characteristic polynomial:
+0.07607 0.01933 0.01933
+Call:
+VAR(y = train, p = selected_lag, type = "const")
+
+
+Estimation results for equation Oil: 
+==================================== 
+Oil = Oil.l1 + Gold.l1 + SP500.l1 + const 
+
+          Estimate Std. Error t value Pr(>|t|)
+Oil.l1   0.0221083  0.0302742   0.730    0.465
+Gold.l1  0.0253494  0.0629532   0.403    0.687
+SP500.l1 0.0459905  0.0668832   0.688    0.492
+const    0.0001818  0.0007311   0.249    0.804
+
+
+Residual standard error: 0.02447 on 1123 degrees of freedom
+Multiple R-Squared: 0.00127,	Adjusted R-squared: -0.001398 
+F-statistic: 0.4758 on 3 and 1123 DF,  p-value: 0.6992 
+
+
+Estimation results for equation Gold: 
+===================================== 
+Gold = Oil.l1 + Gold.l1 + SP500.l1 + const 
+
+           Estimate Std. Error t value Pr(>|t|)   
+Oil.l1    0.0104480  0.0144967   0.721  0.47123   
+Gold.l1  -0.0516992  0.0301448  -1.715  0.08662 . 
+SP500.l1  0.1034259  0.0320267   3.229  0.00128 **
+const     0.0008936  0.0003501   2.553  0.01083 * 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+
+Residual standard error: 0.01172 on 1123 degrees of freedom
+Multiple R-Squared: 0.01184,	Adjusted R-squared: 0.009205 
+F-statistic: 4.487 on 3 and 1123 DF,  p-value: 0.00387 
+
+
+Estimation results for equation SP500: 
+====================================== 
+SP500 = Oil.l1 + Gold.l1 + SP500.l1 + const 
+
+           Estimate Std. Error t value Pr(>|t|)
+Oil.l1   -0.0058011  0.0135874  -0.427    0.669
+Gold.l1   0.0122744  0.0282541   0.434    0.664
+SP500.l1 -0.0161576  0.0300179  -0.538    0.591
+const     0.0003735  0.0003281   1.138    0.255
+
+
+Residual standard error: 0.01098 on 1123 degrees of freedom
+Multiple R-Squared: 0.0005645,	Adjusted R-squared: -0.002105 
+F-statistic: 0.2114 on 3 and 1123 DF,  p-value: 0.8885 
+
+
+
+Covariance matrix of residuals:
+            Oil      Gold     SP500
+Oil   5.987e-04 4.127e-05 2.779e-05
+Gold  4.127e-05 1.373e-04 9.377e-06
+SP500 2.779e-05 9.377e-06 1.206e-04
+
+Correlation matrix of residuals:
+         Oil    Gold   SP500
+Oil   1.0000 0.14396 0.10342
+Gold  0.1440 1.00000 0.07287
+SP500 0.1034 0.07287 1.00000
+
+

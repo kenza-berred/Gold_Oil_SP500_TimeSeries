@@ -1,0 +1,2 @@
+"Test","Lags","Statistic","DF","P_value","H0","Significant_at_5pct"
+"Portmanteau (PT.asymptotic)",12,126.9102575397,99,0.0307994601976005,"No residual serial correlation",TRUE

@@ -1,0 +1,7 @@
+Asset,Order,Lag,Q Statistic,P-value,Conclusion
+Gold,"(0, 0, 1)",10,11.053673274622513,0.35335168121895805,No significant residual autocorrelation detected
+Gold,"(0, 0, 1)",20,21.478371455668213,0.3694724891943727,No significant residual autocorrelation detected
+Oil,"(2, 0, 2)",10,12.566430270404563,0.248933016964707,No significant residual autocorrelation detected
+Oil,"(2, 0, 2)",20,25.23229800573388,0.19268805106615536,No significant residual autocorrelation detected
+SP500,"(0, 0, 0)",10,8.789303963828226,0.5522094646289093,No significant residual autocorrelation detected
+SP500,"(0, 0, 0)",20,27.863781436652253,0.11266336888905659,No significant residual autocorrelation detected

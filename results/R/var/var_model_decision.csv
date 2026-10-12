@@ -1,0 +1,2 @@
+"Criterion","Selected_Lag","Estimated_Lag","Decision"
+"BIC / SC(n)",1,1,"VAR selected by BIC: 1"

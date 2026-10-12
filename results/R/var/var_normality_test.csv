@@ -1,0 +1,2 @@
+"Test","Statistic","DF","P_value","H0","Significant_at_5pct"
+"Multivariate normality (JB)",7554.22553564102,6,0,"Multivariate normality of residuals",TRUE

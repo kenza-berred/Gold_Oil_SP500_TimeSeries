@@ -1,0 +1,3 @@
+test,statistic,p_value,lags
+Portmanteau residual whiteness,127.61783734176123,0.027953794882465095,12.0
+Multivariate residual normality,7554.225535641158,0.0,

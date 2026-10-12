@@ -1,0 +1,39 @@
+
+
+========== Oil ==========
+
+Call:
+stats::arima(x = train, order = order_i, include.mean = TRUE, method = "ML")
+
+Coefficients:
+         ar1      ar2      ma1     ma2  intercept
+      0.0516  -0.9709  -0.0562  0.9383      3e-04
+s.e.  0.0189   0.0306   0.0259  0.0437      7e-04
+
+sigma^2 estimated as 0.0005873:  log likelihood = 2595.42,  aic = -5178.83
+
+
+========== Gold ==========
+
+Call:
+stats::arima(x = train, order = order_i, include.mean = TRUE, method = "ML")
+
+Coefficients:
+          ma1  intercept
+      -0.0455      9e-04
+s.e.   0.0310      3e-04
+
+sigma^2 estimated as 0.0001381:  log likelihood = 3412.13,  aic = -6818.27
+
+
+========== SP500 ==========
+
+Call:
+stats::arima(x = train, order = order_i, include.mean = TRUE, method = "ML")
+
+Coefficients:
+      intercept
+          4e-04
+s.e.      3e-04
+
+sigma^2 estimated as 0.0001203:  log likelihood = 3489.85,  aic = -6975.7

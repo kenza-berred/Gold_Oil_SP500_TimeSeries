@@ -1,0 +1,4 @@
+"Cause","Test","Statistic","P_value"
+"Oil","Block exogeneity / Granger",0.375275350398236,0.687128778090743
+"Gold","Block exogeneity / Granger",0.159046491319359,0.852963106922546
+"SP500","Block exogeneity / Granger",5.23972877608717,0.00534498572453312

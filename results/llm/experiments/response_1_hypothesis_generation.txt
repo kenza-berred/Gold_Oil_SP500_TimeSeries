@@ -1,0 +1,64 @@
+## 1.  Analyse de la stationnarité (ADF vs KPSS)  
+
+| Série étudiée | ADF statistic | ADF p‑value | KPSS statistic | KPSS p‑value | Décision (5 %) |
+|---------------|---------------|------------|----------------|-------------|----------------|
+| **Oil_price_level** | –1.8860 | 0.339 | 2.7765 | 0.01 | **Non‑stationnaire** (ADF > crit., KPSS < 0.05) |
+| **Oil_log_price_level** | –1.9081 | 0.328 | 2.9616 | 0.01 | **Non‑stationnaire** |
+| **Oil_log_price_difference** (rendement) | –15.5723 | 1.98 × 10⁻²⁸ | 0.0979 | 0.10 | **Stationnaire** (ADF < crit., KPSS > 0.05) |
+| **Gold_price_level** | 2.1901 | 0.999 | 4.3253 | 0.01 | **Non‑stationnaire** |
+| **Gold_log_price_level** | 1.1171 | 0.995 | 4.7647 | 0.01 | **Non‑stationnaire** |
+| **Gold_log_price_difference** (rendement) | –34.8478 | 0.0 | 0.3886 | 0.082 | **Stationnaire** |
+| **SP500_price_level** | –0.2252 | 0.935 | 4.7661 | 0.01 | **Non‑stationnaire** |
+| **SP500_log_price_level** | –0.5612 | 0.880 | 4.7528 | 0.01 | **Non‑stationnaire** |
+| **SP500_log_price_difference** (rendement) | –20.7301 | 0.0 | 0.1331 | 0.10 | **Stationnaire** |
+
+### Ce qui est **déjà prouvé** par les tests  
+
+* **Les niveaux de prix (et leurs logarithmes) sont non‑stationnaires** : les deux tests s’accordent pour rejeter la stationnarité (ADF non significatif, KPSS significatif).  
+* **Les rendements (log‑différences) sont stationnaires** : ADF très significatif, KPSS non significatif.  
+
+### Hypothèses testables sur la structure temporelle des rendements  
+
+| Hypothèse | Formulation statistique | Pourquoi elle est plausible |
+|-----------|------------------------|-----------------------------|
+| **H₁ : Les rendements ont une moyenne nulle (ou constante)** | μ = 0 (ou μ ≠ 0 mais constant) dans un modèle ARMA(p,q) | La stationnarité des rendements rend ce type de restriction testable (t‑test sur le terme constant). |
+| **H₂ : Les rendements présentent une autocorrélation d’ordre ≤ k** | ρ₁,…,ρ_k ≠ 0 (test Ljung‑Box ou Q‑statistic) | Même si les rendements sont souvent proches d’un bruit blanc, la présence éventuelle de dépendances linéaires doit être vérifiée avant de passer à la modélisation de la variance. |
+| **H₃ : Les résidus du modèle de moyenne contiennent une hétéroscédasticité conditionnelle** | ARCH(q) > 0 (test LM‑ARCH) | Les tests ARCH‑LM présentés (voir §2) indiquent déjà la présence d’ARCH, mais il faut le confirmer sur les résidus du modèle de moyenne choisi. |
+| **H₄ : La dynamique de la variance conditionnelle est asymétrique** | Coefficients d’asymétrie ≠ 0 dans un EGARCH/TGARCH | Les marchés de matières premières et d’actions affichent souvent des réponses différentes aux chocs positifs et négatifs ; cette hypothèse pourra être testée après avoir identifié le bon ordre GARCH. |
+
+---
+
+## 2.  Interprétation des tests ARCH‑LM  
+
+| Actif | ARCH‑LM statistic | ARCH‑LM p‑value | ARCH F statistic | ARCH F p‑value |
+|-------|-------------------|----------------|-------------------|----------------|
+| **Oil** | 120.4019 | 4.19 × 10⁻²¹ | 13.3606 | 2.32 × 10⁻²² |
+| **Gold** | 124.0399 | 7.65 × 10⁻²² | 13.8147 | 3.45 × 10⁻²³ |
+| **SP500** | 148.8624 | 6.39 × 10⁻²⁷ | 17.0038 | 5.89 × 10⁻²⁹ |
+
+### Ce qui est **déjà prouvé**  
+
+* **Présence très forte d’autocorrélation du carré (ou du module) des rendements** pour les trois actifs.  
+  * Les p‑values sont toutes bien en dessous de 10⁻²⁰, ce qui rejette l’hypothèse nulle d’absence d’ARCH à 1 % (et même à 0,1 %).  
+* **Le test F confirme le même résultat** (p‑value < 10⁻²²).  
+
+### Hypothèses de modélisation de la variance conditionnelle  
+
+| Hypothèse | Formulation | Pourquoi envisagée |
+|-----------|-------------|--------------------|
+| **V₁ : Un modèle GARCH(p,q) capture la dynamique de la variance** | σ²_t = ω + Σ_{i=1}^{p} α_i ε²_{t‑i} + Σ_{j=1}^{q} β_j σ²_{t‑j} , α_i,β_j ≥ 0 | La présence d’ARCH justifie l’inclusion de termes α_i ; la persistance typique des séries financières suggère également des termes β_j. |
+| **V₂ : Un modèle à effet de levier (EGARCH ou TGARCH) améliore l’ajustement** | log σ²_t = ω + Σ γ_i |ε_{t‑i}|/σ_{t‑i} + Σ δ_i ε_{t‑i}/σ_{t‑i} + Σ β_j log σ²_{t‑j} | Les matières premières et les actions affichent souvent une réponse asymétrique aux chocs ; cette hypothèse doit être testée (test de significativité des coefficients d’asymétrie). |
+| **V₃ : Un modèle multivarié (ex. DCC‑GARCH) pourrait capturer la co‑volatilité** | Corr_t = Q_t / √(diag(Q_t) diag(Q_t)') , Q_t = (1‑a‑b) S + a ε_{t‑1} ε'_{t‑1} + b Q_{t‑1} | Si l’on veut étudier la dépendance dynamique entre les trois actifs, la présence d’ARCH univarié sur chaque série rend plausible l’utilisation d’un cadre de corrélation conditionnelle. |
+
+---
+
+## 3.  Méthodologie économétrique séquentielle proposée  
+
+### Étape 0 – Pré‑traitement  
+1. **Construction des rendements** : r_t = Δ log P_t (déjà disponible sous « *_log_price_difference »).  
+2. **Vérification de la stationnarité** (ADF / KPSS) – déjà réalisée, confirme que les r_t sont I(0).  
+
+### Étape 1 – Analyse de la moyenne (modèle ARMA)  
+| Action | Outils / critères | Décision attendue |
+|--------|-------------------|-------------------|
+| 1.1 Test d’autocorrélation (ACF/PACF) | Graphiques, Ljung‑Box Q(ℓ) pour ℓ = 10,20 | Déterminer les ordres p (

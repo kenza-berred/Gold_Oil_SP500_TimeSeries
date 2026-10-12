@@ -1,0 +1,156 @@
+Tu es un professeur d'économétrie et de science des données financières.
+Voici les résultats empiriques réels issus de la phase d'analyse exploratoire (EDA) d'un projet universitaire sur l'Or (Gold), le Pétrole brut WTI (Oil) et le S&P 500 :
+
+{
+  "actifs": [
+    "Gold",
+    "Oil",
+    "SP500"
+  ],
+  "observations_apprentissage": 1128,
+  "periode": "Octobre 2021 à Avril 2026 (90% train)",
+  "tests_stationnarite": [
+    {
+      "series": "Oil_price_level",
+      "ADF_statistic": -1.8860223758007488,
+      "ADF_p_value": 0.3386649253892226,
+      "ADF_lags": 6,
+      "KPSS_statistic": 2.7764588895422557,
+      "KPSS_p_value": 0.01,
+      "KPSS_lags": 20,
+      "ADF_stationary_at_5pct": false,
+      "KPSS_stationary_at_5pct": false
+    },
+    {
+      "series": "Oil_log_price_level",
+      "ADF_statistic": -1.9081052815139576,
+      "ADF_p_value": 0.3282577902650304,
+      "ADF_lags": 6,
+      "KPSS_statistic": 2.961592614448653,
+      "KPSS_p_value": 0.01,
+      "KPSS_lags": 20,
+      "ADF_stationary_at_5pct": false,
+      "KPSS_stationary_at_5pct": false
+    },
+    {
+      "series": "Oil_log_price_difference",
+      "ADF_statistic": -15.572285654185803,
+      "ADF_p_value": 1.9797661182204942e-28,
+      "ADF_lags": 5,
+      "KPSS_statistic": 0.0979209362879564,
+      "KPSS_p_value": 0.1,
+      "KPSS_lags": 0,
+      "ADF_stationary_at_5pct": true,
+      "KPSS_stationary_at_5pct": true
+    },
+    {
+      "series": "Gold_price_level",
+      "ADF_statistic": 2.190050700758056,
+      "ADF_p_value": 0.998874218456742,
+      "ADF_lags": 15,
+      "KPSS_statistic": 4.325347743643849,
+      "KPSS_p_value": 0.01,
+      "KPSS_lags": 20,
+      "ADF_stationary_at_5pct": false,
+      "KPSS_stationary_at_5pct": false
+    },
+    {
+      "series": "Gold_log_price_level",
+      "ADF_statistic": 1.1170765323479863,
+      "ADF_p_value": 0.995359760823016,
+      "ADF_lags": 1,
+      "KPSS_statistic": 4.764669144307746,
+      "KPSS_p_value": 0.01,
+      "KPSS_lags": 20,
+      "ADF_stationary_at_5pct": false,
+      "KPSS_stationary_at_5pct": false
+    },
+    {
+      "series": "Gold_log_price_difference",
+      "ADF_statistic": -34.84784385589443,
+      "ADF_p_value": 0.0,
+      "ADF_lags": 0,
+      "KPSS_statistic": 0.3886235372402386,
+      "KPSS_p_value": 0.0820588201550695,
+      "KPSS_lags": 2,
+      "ADF_stationary_at_5pct": true,
+      "KPSS_stationary_at_5pct": true
+    },
+    {
+      "series": "SP500_price_level",
+      "ADF_statistic": -0.2252346296468011,
+      "ADF_p_value": 0.9354461083703752,
+      "ADF_lags": 4,
+      "KPSS_statistic": 4.766067157488228,
+      "KPSS_p_value": 0.01,
+      "KPSS_lags": 20,
+      "ADF_stationary_at_5pct": false,
+      "KPSS_stationary_at_5pct": false
+    },
+    {
+      "series": "SP500_log_price_level",
+      "ADF_statistic": -0.5611807128744979,
+      "ADF_p_value": 0.8795145817665916,
+      "ADF_lags": 0,
+      "KPSS_statistic": 4.752763082369683,
+      "KPSS_p_value": 0.01,
+      "KPSS_lags": 20,
+      "ADF_stationary_at_5pct": false,
+      "KPSS_stationary_at_5pct": false
+    },
+    {
+      "series": "SP500_log_price_difference",
+      "ADF_statistic": -20.730139180174927,
+      "ADF_p_value": 0.0,
+      "ADF_lags": 2,
+      "KPSS_statistic": 0.1330813957091336,
+      "KPSS_p_value": 0.1,
+      "KPSS_lags": 11,
+      "ADF_stationary_at_5pct": true,
+      "KPSS_stationary_at_5pct": true
+    }
+  ],
+  "tests_arch_lm": [
+    {
+      "Asset": "Oil",
+      "Observations": 1128,
+      "Lags": 10,
+      "ARCH_LM_Statistic": 120.40186569066016,
+      "ARCH_LM_PValue": 4.193711350969191e-21,
+      "ARCH_F_Statistic": 13.36057684308291,
+      "ARCH_F_PValue": 2.3152142710672124e-22
+    },
+    {
+      "Asset": "Gold",
+      "Observations": 1128,
+      "Lags": 10,
+      "ARCH_LM_Statistic": 124.03989499138898,
+      "ARCH_LM_PValue": 7.646270679535663e-22,
+      "ARCH_F_Statistic": 13.814655443769343,
+      "ARCH_F_PValue": 3.445097752390739e-23
+    },
+    {
+      "Asset": "SP500",
+      "Observations": 1128,
+      "Lags": 10,
+      "ARCH_LM_Statistic": 148.86235162259746,
+      "ARCH_LM_PValue": 6.3886524733241295e-27,
+      "ARCH_F_Statistic": 17.003840839546303,
+      "ARCH_F_PValue": 5.887154155197924e-29
+    }
+  ]
+}
+
+CONTRAINTES STRICTES DE RIGUEUR :
+[
+  "Use only evidence supported by the supplied results.",
+  "Small percentage improvements must not be described as major gains.",
+  "Distinguish return forecasts from volatility forecasts.",
+  "Do not claim Granger predictability proves real-world causality."
+]
+
+CONSIGNE :
+1. Analyse les propriétés de stationnarité (ADF vs KPSS sur prix et rendements) et formule des hypothèses testables sur la structure temporelle des rendements.
+2. Interprète les statistiques ARCH-LM obtenues (p-values < 10^-20) et formule des hypothèses sur la modélisation de la variance conditionnelle.
+3. Propose une méthodologie économétrique séquentielle pour tester ces hypothèses (modèles de moyenne conditionnelle puis modèles de variance conditionnelle).
+4. Distingue rigoureusement ce qui est déjà prouvé par les données fournies de ce qui reste une hypothèse à vérifier. N'invente aucun chiffre ni résultat futur.

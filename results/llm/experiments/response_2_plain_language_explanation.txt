@@ -1,0 +1,57 @@
+**1. Ce que les modèles nous disent – résumé pour le CFO**  
+
+| Actif | Type de prévision | Performance observée (sur 126 jours) | Que faut‑en retenir ? |
+|-------|-------------------|--------------------------------------|-----------------------|
+| **Or** | Retour quotidien (ARIMA, SARIMA, VAR) | MAE ≈ 0,011  et RMSE ≈ 0,014  – légèrement *inférieurs* à la prévision naïve « zéro rendement » (MAE = 0,01113, RMSE = 0,01449). Les améliorations sont de l’ordre de –0,1 % à –0,5 % (c’est‑à‑dire aucune amélioration réelle). | Les modèles n’apportent pas d’avantage mesurable par rapport à l’hypothèse que le rendement moyen est nul. |
+| **Pétrole** | Retour quotidien (ARIMA, SARIMA, VAR) | MAE entre 0,0287 et 0,0289 ; RMSE entre 0,0393 et 0,0394  – seulement de petites améliorations (≤ 0,8 % de MAE, ≤ 0,7 % de RMSE) pour les modèles ARIMA/SARIMA, et aucune amélioration pour le VAR. | Même constat : les gains sont très modestes et statistiquement non significatifs. |
+| **S&P 500** | Retour quotidien (pas de modèle présenté, uniquement test de causalité) | – | Aucun modèle de prévision de rendement n’a été estimé pour le S&P 500 dans le jeu de résultats fourni. |
+
+**En bref** : les modèles de séries temporelles classiques (ARIMA, SARIMA, VAR) ne parviennent pas à prévoir de façon fiable les rendements journaliers de l’or, du pétrole ou du S&P 500. Les écarts avec la simple hypothèse « rendement nul » sont très faibles et, d’après les tests de Diebold‑Mariano (Holm‑ajustés), ils ne sont pas statistiquement différents du benchmark.
+
+---
+
+**2. Pourquoi les modèles complexes n’améliorent pas la prévision « zéro rendement »**  
+
+| Raison | Explication business‑friendly |
+|--------|--------------------------------|
+| **Efficience des marchés** | Dans un marché très liquide et largement suivi, les prix intègrent rapidement toute l’information disponible. Les rendements journaliers sont donc très proches d’un bruit aléatoire (martingale). Un modèle qui ne dispose que des prix passés ne peut pas extraire d’information prévisible supplémentaire. |
+| **Signal très faible** | Les MAE et RMSE observés sont déjà très petits (≈ 1 % pour l’or, ≈ 3 % pour le pétrole). Une amélioration de 0,1 % représente une variation qui se situe dans la marge d’erreur due au bruit de marché. |
+| **Complexité vs sur‑ajustement** | Ajouter des composantes saisonnières (ex. : SARIMA avec saisonnalité 5 jours) ou des variables multiples (VAR) ne crée pas de gain réel ; au contraire, cela augmente le risque de sur‑ajustement aux fluctuations passagères. |
+| **Résidu du VAR** | Le test de corrélation sérielle des résidus du VAR donne p = 0,028, ce qui indique une légère autocorrélation résiduelle – un signe que le modèle ne capture pas entièrement la dynamique et que les prévisions restent bruitées. |
+| **Choix différents entre Python et R** | Pour le pétrole, les deux environnements ont choisi des ordres saisonniers différents (Python : (1,0,0,5) ; R : (0,0,1,5)). Cette divergence montre que la spécification n’est pas robuste et que les gains observés dépendent davantage du logiciel que d’une vraie capacité prédictive. |
+
+---
+
+**3. Interprétation du test de causalité de Granger (S&P 500 → Or)**  
+
+- **Statistique** : 10,43 avec un *p‑value* de 0,0013 → le test indique que, dans le cadre d’un VAR(1), les valeurs passées du S&P 500 apportent une information statistiquement significative pour prévoir les rendements futurs de l’or.  
+- **Ce que cela **ne** signifie pas** :  
+  * Ce n’est **pas** une preuve de « cause réelle » au sens économique ou physique. Le test ne fait que montrer une corrélation temporelle qui améliore la prévision dans le modèle spécifié.  
+  * La relation peut être indirecte (ex. : les deux actifs réagissent à un même facteur macro‑économique) ou le résultat peut être sensible à la période étudiée (avril‑octobre 2026).  
+- **Implication pratique** : même si le S&P 500 contient une information légèrement utile pour anticiper les mouvements de l’or, l’amélioration de la prévision du rendement reste minime (voir tableau 1). Il ne faut donc pas baser une stratégie de trading sur ce seul signal.  
+
+---
+
+**4. Direction des cours vs prévision du risque (volatilité)**  
+
+| Aspect | Ce qui a été mesuré | Résultat clé | Interprétation |
+|--------|--------------------|--------------|----------------|
+| **Direction / niveau du rendement** | MAE et RMSE des modèles ARIMA/SARIMA/VAR (retours) | Améliorations < 1 % (ou même détérioration) par rapport à la prévision « zéro » | Les modèles ne sont pas capables de prévoir de façon fiable la **direction** (hausse/baisse) des prix sur un horizon quotidien. |
+| **Volatilité (risque) – modèle GARCH** | MSE, MAE et QLIKE (mesures d’erreur sur la variance conditionnelle) | - Pour l’or, le GARCH a un QLIKE légèrement meilleur (‑7,394 vs ‑7,368). <br>- Pour le pétrole, le GARCH améliore le QLIKE (‑5,516 vs ‑4,837). <br>- Pour le S&P 500, le GARCH améliore le QLIKE (‑8,649 vs ‑8,511). | Le GARCH capture **l’évolution de la volatilité** (incertitude) de façon plus précise que le modèle de référence (variance constante). Cela signifie que, même si on ne peut pas prévoir le signe du rendement, on peut mieux estimer le niveau de risque à court terme. |
+| **Limite** | Les métriques GARCH (MSE, MAE, QLIKE) portent sur la **variance** et ne sont pas comparables directement aux MAE/RMSE des prévisions de rendement. | On ne peut pas dire que le GARCH « bat » les modèles ARIMA sur la même tâche ; il excelle simplement sur une tâche différente (prévision du risque). | En pratique, le GARCH est utile pour dimensionner les couvertures, les marges de VaR ou les exigences de capital, mais il ne fournit pas de signal de direction de prix. |
+
+---
+
+### Points de vigilance & limites à garder en tête  
+
+1. **Période courte** – 126 jours (avril‑octobre 2026) : les résultats peuvent ne pas se généraliser à d’autres horizons ou à d’autres cycles de marché.  
+2. **Tests de co‑intégration** – Les tests de Johansen (trace et max‑eigenvalue) ont donné des conclusions contradictoires, donc aucune relation d’équilibre à long terme n’a pu être confirmée entre les trois actifs.  
+3. **Tests de Diebold‑Mariano** – Après ajustement Holm, aucune différence n’est statistiquement significative (N = 25). Cela renforce l’idée que les gains observés sont du bruit.  
+4. **Modélisation saisonnière** – Les ordres saisonniers différents entre Python et R pour le pétrole montrent que la spécification n’est pas robuste ; il faut donc rester prudent avant de déployer un modèle en production.  
+5. **Résidus du VAR** – La corrélation sérielle résiduelle (p = 0,028) indique que le VAR(1) ne capture pas toute la dynamique, ce qui limite la fiabilité de toute prévision multivariée.  
+
+---
+
+### Message clé pour le Directeur Financier  
+
+- **Prévoir le signe quotidien des cours** (or, pétrole, S&P 500) avec les modèles classiques ne donne pas d’avantage mesurable par rapport à l’hypothèse « rendement nul ». Cela est cohérent avec l’idée d

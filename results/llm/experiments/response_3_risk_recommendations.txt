@@ -1,0 +1,54 @@
+**NOTE SYNTHÉTIQUE – COMITÉ DE GESTION DES RISQUES**  
+*Projet : Modélisation des séries temporelles – Volatilité (GARCH) et prévision de rendements (RNN)*  
+*Date : 12 octobre 2026*  
+
+---
+
+## 1.  Utilisation opérationnelle des résultats  
+
+| **Objet** | **Résultat clé** | **Implication concrète pour le risque** |
+|-----------|------------------|------------------------------------------|
+| **Modélisation de la volatilité (GARCH)** | • Q‑LIKE : le modèle GARCH est meilleur que le benchmark (baseline) pour **Gold**, **Oil** et **SP500** (colonne *GARCH_Better_QLIKE* = true). <br>• MSE/MAE : le GARCH n’est pas systématiquement plus précis que le baseline (ex. : Gold : MSE = 1.06 × 10⁻⁷ > 9.99 × 10⁻⁸). | • **Allocation de capital** : les estimations de volatilité GARCH peuvent être utilisées comme *input* principal pour les modèles de VaR/ES, car elles offrent une mesure de risque plus cohérente (QLIKE). <br>• **Dimensionnement des limites de risque** : les volatilités prédites (σ̂ₜ) permettent de calibrer les limites de position (ex. :  max Δ = k · σ̂ₜ) de façon dynamique, en tenant compte de la hausse de volatilité observée sur Oil (σ̂ ≈ √1.22 × 10⁻⁵). <br>• **VaR** : en insérant σ̂ₜ dans une distribution normale (ou t‑Student) on obtient un VaR = zα · σ̂ₜ. Le QLIKE plus favorable indique que le GARCH capture mieux la dynamique des queues, ce qui rend le VaR plus fiable que celui issu du modèle de variance constante. |
+| **Prévision des rendements (RNN – LSTM / GRU)** | • MSE, RMSE et MAE des réseaux sont **légèrement supérieurs** aux valeurs de référence (baseline) pour les trois actifs (ex. : Oil : LSTM MSE = 0.0015735 > baseline = 0.0015520). <br>• Aucun gain statistique détecté par les tests de Diebold‑Mariano (p‑valeurs > 0,95 après correction de Holm). | • **Directionnel** : les prévisions de rendement quotidien issues des RNN ne sont **pas plus fiables** que le simple « zero‑forecast » (prévision nulle). Elles ne doivent donc **pas** être utilisées comme base pour des stratégies de trading directionnel. <br>• **Gestion du risque** : les prévisions peuvent néanmoins servir de *scenario generator* (ex. : simulation Monte‑Carlo) à condition de les pondérer fortement par le modèle de volatilité GARCH. <br>• **Limite de VaR** : la VaR calculée à partir du GARCH reste la référence ; les prévisions de rendement ne sont pas intégrées dans le calcul du capital économique, sauf dans des analyses de stress où l’on veut explorer des scénarios extrêmes. |
+
+### Procédure recommandée (exemple)
+
+1. **Chaque jour de clôture** :  
+   - Estimer la volatilité σ̂ₜ avec le modèle GARCH (paramètres déjà calibrés).  
+   - Calculer le VaR₉₅ (ou VaR₉₉) :  VaRₜ = z₀·₉₅ · σ̂ₜ.  
+2. **Mise à jour des limites de position** :  
+   - Limite = k · σ̂ₜ (k ≈ 3 pour un niveau de confiance 99 %).  
+   - Vérifier que l’exposition nette (Δ) ne dépasse pas cette limite.  
+3. **Reporting** :  
+   - Inclure le QLIKE du GARCH comme indicateur de qualité de la volatilité.  
+   - Mentionner explicitement que les prévisions de rendement RNN sont **non supérieures** au benchmark zéro et ne sont donc pas prises en compte pour le dimensionnement des limites.  
+
+---
+
+## 2.  Pourquoi les réseaux de neurones (LSTM, GRU) n’apportent aucun avantage
+
+| **Actif** | **MSE (RNN)** | **MSE (Baseline)** | **Δ MSE** |
+|-----------|---------------|--------------------|-----------|
+| Oil       | 0.0015735 (LSTM) / 0.0015635 (GRU) | 0.0015520 | +0.000021  (LSTM) / +0.000011  (GRU) |
+| Gold      | 0.0002131 (LSTM) / 0.0002132 (GRU) | 0.0002116 | +0.0000015 (LSTM) / +0.0000016 (GRU) |
+| SP500     | 6.14 × 10⁻⁵ (LSTM) / 6.26 × 10⁻⁵ (GRU) | 6.23 × 10⁻⁵ | –0.0000009 (LSTM) / +0.0000003 (GRU) |
+
+*Observations*  
+
+1. **Performance marginale** – Les écarts de MSE/MAE sont de l’ordre de 10⁻⁶ à 10⁻⁴, soit négligeables au regard du bruit inhérent aux rendements quotidiens.  
+2. **Tests de Diebold‑Mariano** – Tous les p‑values (post‑Holm) sont égaux à 1.0, ce qui indique que l’on ne peut rejeter l’hypothèse nulle d’égalité des prévisions. Aucun modèle RNN n’est statistiquement supérieur au benchmark « zero‑forecast ».  
+3. **Complexité vs gain** – Les RNN requièrent une infrastructure de calcul (GPU, entraînement) sans amélioration mesurable du risque ou du rendement prévisionnel.  
+
+*Conclusion* : pour la prévision directionnelle quotidienne, les RNN ne justifient pas leur coût et ne doivent pas être intégrés dans les processus décisionnels de trading ou de gestion de portefeuille.
+
+---
+
+## 3.  Limites majeures et scénarios d’échec  
+
+| **Limite** | **Description** | **Scénario d’échec potentiel** |
+|------------|----------------|--------------------------------|
+| **Non‑significativité des comparaisons** | Les tests Diebold‑Mariano montrent des p‑values très élevées (≥ 0,60) même après correction de Holm. | En période de forte turbulence (ex. : crise géopolitique), les modèles RNN pourraient produire des prévisions encore plus erronées que le simple zéro, augmentant le risque de mauvaise allocation de capital. |
+| **Hypothèse de normalité de la distribution des résidus** | Les calculs de VaR reposent souvent sur une approximation normale alors que les rendements financiers sont généralement **asymétriques et à queues lourdes**. | Un choc de marché (ex. : chute brutale du prix du pétrole) générerait des pertes bien supérieures au VaR calculé, entraînant un dépassement des limites de risque. |
+| **Instabilité des paramètres GARCH** | Le modèle GARCH a été calibré sur un échantillon historique (126 observations de test). Les paramètres peuvent changer rapidement (volatilité persistante, changement de régime). | Un passage soudain d’un régime de faible volatilité à un régime de haute volatilité (ex. : crise financière) rendrait les prévisions de σ̂ₜ sous‑estimates, faussant le dimensionnement des limites. |
+| **Période d’évaluation courte** | Les jeux de données (126 observations de test, 25 observations pour DM) sont relativement courts pour capturer la dynamique à long terme. | Sur un horizon plus long (ex. : 5 ans), les performances observées pourraient se dégrader, rendant les modèles inadaptés pour la planification stratégique ou le stress testing. |
+| **Non‑prise en compte des corrélations inter‑actifs** |

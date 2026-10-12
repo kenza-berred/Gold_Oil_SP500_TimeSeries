@@ -1,0 +1,17 @@
+{
+  "selected_model": "LSTM",
+  "mean_validation_rmse_by_model": {
+    "LSTM": 0.014409296668810832,
+    "GRU": 0.014456161244996364
+  },
+  "window_size": 20,
+  "validation_folds": 3,
+  "training_rows": 1128,
+  "test_rows": 126,
+  "assets": [
+    "Oil",
+    "Gold",
+    "SP500"
+  ],
+  "note": "One-step-ahead forecasts. Test observations are not used for model selection or fitting."
+}

@@ -1,0 +1,32 @@
+{
+  "execution_timestamp": "2026-10-12T13:51:57.073787+00:00",
+  "provider": "Groq",
+  "model": "openai/gpt-oss-120b",
+  "status": "COMPLETED",
+  "experiments": [
+    {
+      "id": 1,
+      "name": "hypothesis_generation",
+      "status": "COMPLETED",
+      "prompt_file": "prompt_1_hypothesis_generation.txt",
+      "response_file": "response_1_hypothesis_generation.txt",
+      "error": null
+    },
+    {
+      "id": 2,
+      "name": "plain_language_explanation",
+      "status": "COMPLETED",
+      "prompt_file": "prompt_2_plain_language_explanation.txt",
+      "response_file": "response_2_plain_language_explanation.txt",
+      "error": null
+    },
+    {
+      "id": 3,
+      "name": "risk_recommendations",
+      "status": "COMPLETED",
+      "prompt_file": "prompt_3_risk_recommendations.txt",
+      "response_file": "response_3_risk_recommendations.txt",
+      "error": null
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+# ============================================================
+# Financial Time-Series Econometrics & Generative AI — submission
+# Course deliverable (TEK-UP, Data Science & AI Engineering)
+#
+# Target interpreter: Python 3.12 (the environment used to produce
+# every artifact shipped under results/).
+#
+# Install (Windows / PowerShell):
+#   python -m venv dl_env
+#   .\dl_env\Scripts\Activate.ps1
+#   python -m pip install --upgrade pip
+#   python -m pip install -r requirements.txt
+#
+# Notes on version pins
+#   Versions marked [installed] match the environment that generated
+#   results/**. Versions marked [to pin] were installed separately at
+#   run time, so no exact build was captured — a ">==" floor is given
+#   instead of a false pin. Everything below is derived from the actual
+#   import statements in src/, python/ and notebooks/ — nothing here is
+#   a speculative dependency.
+# ============================================================
+
+# ---- Core numerics and data handling (every script) --------------------------
+numpy==2.5.4                 # [installed]
+pandas==3.0.6                # [installed] — DataFrame I/O for data/processed/*.csv
+python-dateutil==2.9.0.post0 # [installed] — date index handling
+scipy==1.18.1                # [installed] — python/diebold_mariano_test.py (stats)
+
+# ---- Plotting (ARIMA, VAR, deep-learning, DM figures) ------------------------
+matplotlib==3.11.2           # [installed]
+pillow==12.3.0               # [installed] — PNG export backend
+contourpy==1.4.0             # [installed] — matplotlib transitive
+fonttools==4.66.1            # [installed] — matplotlib transitive
+
+# ---- Classical econometrics: ARIMA, SARIMA, VAR, VECM, ARCH-LM ---------------
+# Used by: python/arima_model.py, sarima_model.py, var_model.py, vecm_model.py,
+#          arch_garch_model.py, garch_model.py and notebooks/01_EDA.ipynb
+statsmodels>=0.14.0          # [to pin] — NOT captured from the generating env; install
+                             #   the build current at run time and record the version here
+scikit-learn>=1.4.0          # [installed build: 1.9.1] — StandardScaler, MSE/MAE
+joblib==1.6.0                # [installed] — scikit-learn transitive
+
+# ---- Volatility modelling: GARCH(1,1) Student-t / Normal --------------------
+# Used by: python/garch_model.py, garch_forecast_evaluation.py,
+#          garch_distribution_comparison.py
+arch>=0.7.0                  # [to pin] — NOT captured from the generating env
+
+# ---- Deep learning: LSTM / GRU, single-step and 5-day multi-step ------------
+# Used by: python/deep_learning_models.py, python/deep_learning_multistep.py
+tensorflow==2.21.0           # [installed] — pulls keras 3.15.1
+keras==3.15.1                # [installed]
+h5py==3.14.0                 # [installed] — checkpoint I/O
+
+# ---- Data pipeline (Stage 1) ------------------------------------------------
+# Used by: src/download_data.py only. The submission ships data/raw/ and
+# data/processed/ as a frozen snapshot, so this is OPTIONAL for reproducing
+# the reported results — re-downloading can silently change the inputs.
+yfinance>=0.2.50             # [optional] — network download, not in generating env
+
+# ---- Exploratory notebook (Stage 2) ----------------------------------------
+# notebooks/01_EDA.ipynb declares kernelspec "python3" (display name "base").
+jupyter>=1.0.0               # [to pin] — runner only, no artifact depends on it
+
+# ---- LLM experiments (Bloc C) ----------------------------------------------
+# python/llm/run_experiments.py calls the Groq OpenAI-compatible endpoint with
+# the standard library only (urllib.request / urllib.error). NO SDK required.
+# requests==2.34.2, urllib3==2.8.0 and certifi==2026.7.22 are present in the
+# environment but are not imported by any submitted script.
+# The API key is read from the GROQ_API_KEY environment variable — never
+# hardcode it. Without the key the scripts degrade to PENDING_API_KEY.
+
+# ---- Intentionally NOT required --------------------------------------------
+# python-docx, pymupdf, lxml — used only by the report-rendering pipeline that
+# lives outside this submission folder. The report ships as a finished PDF.
